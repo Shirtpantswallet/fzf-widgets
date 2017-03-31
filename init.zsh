@@ -3,11 +3,11 @@ export FZF_WIDGETS_ROOT="$0:a:h"
 : "Create cache directory" && () {
   if [[ -n $XDG_CACHE_HOME ]]; then
     [[ ! -d $XDG_CACHE_HOME ]] && mkdir $XDG_CACHE_HOME
-    local dir="$XDG_CACHE_HOME/fzf-widgets"
+    local dir="$XDG_CACHE_HOME/fzf-widgets-$USER"
   else
-    local dir="/tmp/fzf-widgets"
+    local dir="/tmp/fzf-widgets-$USER"
   fi
-  [[ ! -d $dir ]] && mkdir $dir
+  [[ ! -d $dir ]] && mkdir $dir && chmod 700 $dir
   export FZF_WIDGETS_CACHE="$dir/data.txt"
 }
 
