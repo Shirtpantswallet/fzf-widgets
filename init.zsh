@@ -27,3 +27,6 @@ if [[ -n ZSH_AUTOSUGGEST_IGNORE_WIDGETS ]]; then
     `ls $FZF_WIDGET_ROOT/autoload/widgets/`
   )
 fi
+
+bindkey -M 'viins' '^n' fzf-change-directory
+# fzf-change-directory should be drop-down, limited in length, with a preview of nested (exa?)
