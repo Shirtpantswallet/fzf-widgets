@@ -2,7 +2,7 @@ export FZF_WIDGET_ROOT="$0:a:h"
 export FZF_WIDGET_TMUX=0
 typeset -gA FZF_WIDGET_OPTS
 
-if [[ -z $FZF_WIDGET_CACHE ]]; then
+if [[ -z ${FZF_WIDGET_CACHE} ]]; then
   export FZF_WIDGET_CACHE="${XDG_CACHE_HOME:-$HOME/.cache}/fzf-widgets"
 fi
 
@@ -11,20 +11,20 @@ fi
 }
 
 : "Autoload functions and Create widgets" && () {
-  local dir="$FZF_WIDGET_ROOT/autoload"
-  fpath=($dir/**/*(N-/) $fpath)
+  local dir="${FZF_WIDGET_ROOT}/autoload"
+  fpath=(${dir}/**/*(N-/) ${fpath})
 
-  autoload -Uz `ls -F $dir/**/* | grep -v /`
+  autoload -Uz $(fd --type file . ${dir} --exec echo {/})
 
   local w
-  for w in `ls $dir/widgets/`; do zle -N $w; done
+  for w in $(fd --type file . ${dir}/widgets/ --exec echo {/}); do zle -N ${w}; done
 }
 
 # Support zsh-autosuggestions
 if [[ -n ZSH_AUTOSUGGEST_IGNORE_WIDGETS ]]; then
   ZSH_AUTOSUGGEST_IGNORE_WIDGETS=(
-    $ZSH_AUTOSUGGEST_IGNORE_WIDGETS
-    `ls $FZF_WIDGET_ROOT/autoload/widgets/`
+    ${ZSH_AUTOSUGGEST_IGNORE_WIDGETS}
+    $(fd --type file . ${FZF_WIDGET_ROOT}/autoload/widgets/ --exec echo {/})
   )
 fi
 
