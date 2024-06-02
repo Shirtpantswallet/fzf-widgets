@@ -10,7 +10,7 @@ __fzf::widget::init 'git checkout' || return 1
 git branch --list -v | \
   grep -v '^\*' | \
   sed 's/^  *//' | \
-  __fzf::widget::select $FZF_WIDGET_OPTS[git-checkout-branch] +m | \
+  __fzf::widget::select ${FZF_WIDGET_OPTS[git-checkout-branch]} +m | \
   awk '{print $1}' | \
   __fzf::widget::insert
 

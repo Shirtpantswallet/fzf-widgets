@@ -4,6 +4,6 @@ __fzf::widget::init || return 1
 
 eval "${FZF_HISTORY_COMMAND:-"fc -l 1"}" | \
   __fzf::widget::select --tac --tiebreak=index \
-  --bind=ctrl-r:toggle-sort $FZF_WIDGET_OPTS[insert-history] --query="$LBUFFER" +m | \
+  --bind=ctrl-r:toggle-sort ${FZF_WIDGET_OPTS[insert-history]} --query="${LBUFFER}" +m | \
   sed -E 's/^ *[0-9]+\*?  ?//' | \
   __fzf::widget::replace

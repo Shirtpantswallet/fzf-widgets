@@ -1,12 +1,9 @@
 #!/bin/zsh
 
-__fzf::widget::init "$EDITOR --" || return 1
+__fzf::widget::init "${EDITOR} --" || return 1
 
-eval "${FZF_EDIT_FILES_COMMAND:-"find -L . -type f -print -o -type l -print -o \\
-  \\( -path '*/\\.*' -o -fstype 'devfs' -o -fstype 'devtmpfs' -o -fstype 'proc' \\) -prune \\
-  2> /dev/null | \\
-  sed 's|\\./||g'"}" | \
-  __fzf::widget::select $FZF_WIDGET_OPTS[edit-files] -m | \
+eval "${FZF_INSERT_DIR_FIND_COMMAND:-"fd --strip-cwd-prefix --follow --type f --type l --exclude '.*' --exclude 'dev' --exclude 'proc' --exclude 'sys' 2> /dev/null"}" | \
+  __fzf::widget::select ${FZF_WIDGET_OPTS[edit-files]} -m | \
   __fzf::widget::insert -q
 
 __fzf::widget::exec

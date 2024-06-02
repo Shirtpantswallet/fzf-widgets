@@ -8,7 +8,7 @@ if ! __fzf::widget::check 'cdr'; then
     autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
     add-zsh-hook chpwd chpwd_recent_dirs
   '
-  __fzf::widget::print "$msg"
+  __fzf::widget::print "${msg}"
   return 1
 fi
 
@@ -16,7 +16,7 @@ __fzf::widget::init 'cd --' || return 1
 
 cdr -l | \
   sed 's/^[^ ][^ ]*  *//' | \
-  __fzf::widget::select $FZF_WIDGET_OPTS[change-recent-dir] +m | \
+  __fzf::widget::select ${FZF_WIDGET_OPTS[change-recent-dir]} +m | \
   __fzf::widget::insert -q
 
 __fzf::widget::exec

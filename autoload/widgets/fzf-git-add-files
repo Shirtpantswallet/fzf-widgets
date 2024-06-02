@@ -8,8 +8,8 @@ fi
 __fzf::widget::init 'git add --' || return 1
 
 git status --short | \
-  grep '^.[MD?]' | \
-  __fzf::widget::select $FZF_WIDGET_OPTS[git-add-files] -m | \
+  rg '^.[MD?]' | \
+  __fzf::widget::select ${FZF_WIDGET_OPTS[git-add-files]} -m | \
   awk '{print $2}' | \
   __fzf::widget::insert -q
 

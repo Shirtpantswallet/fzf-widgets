@@ -10,7 +10,7 @@ __fzf::widget::init 'git branch -D' || return 1
 git branch --list -v | \
   grep -v '^\*' | \
   sed 's/^  *//' | \
-  __fzf::widget::select $FZF_WIDGET_OPTS[git-delete-branches] -m | \
+  __fzf::widget::select ${FZF_WIDGET_OPTS[git-delete-branches]} -m | \
   awk '{print $1}' | \
   __fzf::widget::insert
 

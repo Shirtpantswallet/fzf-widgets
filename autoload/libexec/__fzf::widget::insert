@@ -1,16 +1,16 @@
 #!/bin/zsh
 
 local -a items
-IFS=$'\n' items=(`cat`)
+IFS=$'\n' items=( $(cat) )
 
 if [[ -n $items ]]; then
   local item
   for item in $items; do
     if [[ $1 = -q ]]; then
       # quote special characters with backslashes
-      BUFFER+="$item:q:gs/\\~/~/ "
+      BUFFER+="${item:q:gs/\\~/~/} "
     else
-      BUFFER+="$item "
+      BUFFER+="${item} "
     fi
   done
   BUFFER="${BUFFER% }"
@@ -18,7 +18,7 @@ if [[ -n $items ]]; then
   zle redisplay
 else
   __fzf::widget::clear
-  if [[ `cat $FZF_WIDGET_CACHE/status` = 1 ]]; then
+  if [[ $(cat ${FZF_WIDGET_CACHE}/status) = 1 ]]; then
     __fzf::widget::print "$0: there's no match"
   fi
   return 1
