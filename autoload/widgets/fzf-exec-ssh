@@ -1,13 +1,14 @@
-#!/bin/zsh
+#!/usr/bin/env zsh
+function fzf-exec-ssh {
+  __fzf::widget::init 'ssh --' || return 1
 
-__fzf::widget::init 'ssh --' || return 1
+  cat ~/.ssh/config /etc/ssh/ssh_config 2>/dev/null | \
+    rg -i '^host' | \
+    rg -v '\*' | \
+    awk '{if (length($2) > 0) {print $2}}' | \
+    sort -u | \
+    __fzf::widget::select ${FZF_WIDGET_OPTS[exec-ssh]} +m | \
+    __fzf::widget::insert
 
-cat ~/.ssh/config /etc/ssh/ssh_config 2>/dev/null | \
-  rg -i '^host' | \
-  rg -v '\*' | \
-  awk '{if (length($2) > 0) {print $2}}' | \
-  sort -u | \
-  __fzf::widget::select ${FZF_WIDGET_OPTS[exec-ssh]} +m | \
-  __fzf::widget::insert
-
-__fzf::widget::exec
+  __fzf::widget::exec
+}

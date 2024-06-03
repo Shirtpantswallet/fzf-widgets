@@ -1,6 +1,7 @@
-#!/bin/zsh
-
-if ! type $1 >/dev/null 2>&1; then
-  __fzf::widget::print "$0: command not found: $1"
-  return 1
-fi
+#!/usr/bin/env zsh
+function __fzf::widget::check {
+  if ! type $1 >/dev/null 2>&1; then
+    __fzf::widget::print "$0: command not found: $1"
+    return 1
+  fi
+}

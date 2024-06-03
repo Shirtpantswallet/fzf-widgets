@@ -1,12 +1,13 @@
-#!/bin/zsh
-
-local -A selector
-selector[cmd]='fzf'
-
-[[ $FZF_WIDGET_TMUX != 0 ]] && selector[cmd]='fzf-tmux'
-
-cat | ${selector[cmd]} $@
-
-selector[status]=$?
-echo "${selector[status]}" >! ${FZF_WIDGET_CACHE}/status
-[[ ${selector[status]} = 0 ]] && return 0 || return 1
+#!/usr/bin/env zsh
+function __fzf::widget::select {
+  local -A selector
+  selector[cmd]='fzf'
+  
+  [[ $FZF_WIDGET_TMUX != 0 ]] && selector[cmd]='fzf-tmux'
+  
+  cat | ${selector[cmd]} $@
+  
+  selector[status]=$?
+  echo "${selector[status]}" >! ${FZF_WIDGET_CACHE}/status
+  [[ ${selector[status]} = 0 ]] && return 0 || return 1
+}

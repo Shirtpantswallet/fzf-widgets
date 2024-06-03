@@ -1,11 +1,12 @@
-#!/bin/zsh
+#!/usr/bin/env zsh
+function fzf-select-github-widget {
+  __fzf::widget::init || return 1
 
-__fzf::widget::init || return 1
-
-ls ${FZF_WIDGET_ROOT}/autoload/widgets/ | \
-  sed -e 's/fzf-//g' | \
-  grep '^github-.*$' | \
-  egrep -v '^select-widget$' | \
-  __fzf::widget::select ${FZF_WIDGET_OPTS[select-docker-widget]} +m | \
-  sed 's/^/fzf-/' | \
-  __fzf::widget::exec -q
+  ls ${FZF_WIDGET_ROOT}/autoload/widgets/ | \
+    sed -e 's/fzf-//g' | \
+    grep '^github-.*$' | \
+    egrep -v '^select-widget$' | \
+    __fzf::widget::select ${FZF_WIDGET_OPTS[select-docker-widget]} +m | \
+    sed 's/^/fzf-/' | \
+    __fzf::widget::exec -q
+}

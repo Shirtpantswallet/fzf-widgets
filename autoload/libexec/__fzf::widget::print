@@ -1,3 +1,4 @@
-#!/bin/zsh
-
-POSTDISPLAY=$'\n'"$1"
+#!/usr/bin/env zsh
+function __fzf::widget::print {
+  POSTDISPLAY=$'\n'"$1"
+}

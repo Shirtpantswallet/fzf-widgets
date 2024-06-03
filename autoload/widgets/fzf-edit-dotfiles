@@ -1,21 +1,22 @@
-#!/bin/zsh
+#!/usr/bin/env zsh
+function fzf-edit-dotfiles {
+  if [[ -z $DOT_BASE_DIR ]]; then
+    local msg='fzf-edit-dotfiles: Not set $DOT_BASE_DIR
 
-if [[ -z $DOT_BASE_DIR ]]; then
-  local msg='fzf-edit-dotfiles: Not set $DOT_BASE_DIR
+    Add the following to your `.zshenv`:
 
-  Add the following to your `.zshenv`:
+        export $DOT_BASE_DIR=/path/to/dir/dotfiles
+    '
+    __fzf::widget::print "${msg}"
+    return 1
+  fi
 
-      export $DOT_BASE_DIR=/path/to/dir/dotfiles
-  '
-  __fzf::widget::print "${msg}"
-  return 1
-fi
+  __fzf::widget::init "${EDITOR} --" || return 1
 
-__fzf::widget::init "${EDITOR} --" || return 1
+  git -C ${DOT_BASE_DIR} ls-files | \
+    sed "s|^|~/|g" | \
+    __fzf::widget::select ${FZF_WIDGET_OPTS[edit-dotfiles]} -m | \
+    __fzf::widget::insert -q
 
-git -C ${DOT_BASE_DIR} ls-files | \
-  sed "s|^|~/|g" | \
-  __fzf::widget::select ${FZF_WIDGET_OPTS[edit-dotfiles]} -m | \
-  __fzf::widget::insert -q
-
-__fzf::widget::exec
+  __fzf::widget::exec
+}

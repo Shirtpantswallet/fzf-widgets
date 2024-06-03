@@ -1,9 +1,10 @@
-#!/bin/zsh
+#!/usr/bin/env zsh
+function fzf-edit-files {
+  __fzf::widget::init "${EDITOR} --" || return 1
 
-__fzf::widget::init "${EDITOR} --" || return 1
+  eval "${FZF_INSERT_DIR_FIND_COMMAND:-"fd --strip-cwd-prefix --follow --type f --type l --exclude '.*' --exclude 'dev' --exclude 'proc' --exclude 'sys' 2> /dev/null"}" | \
+    __fzf::widget::select ${FZF_WIDGET_OPTS[edit-files]} -m | \
+    __fzf::widget::insert -q
 
-eval "${FZF_INSERT_DIR_FIND_COMMAND:-"fd --strip-cwd-prefix --follow --type f --type l --exclude '.*' --exclude 'dev' --exclude 'proc' --exclude 'sys' 2> /dev/null"}" | \
-  __fzf::widget::select ${FZF_WIDGET_OPTS[edit-files]} -m | \
-  __fzf::widget::insert -q
-
-__fzf::widget::exec
+  __fzf::widget::exec
+}

@@ -1,14 +1,15 @@
-#!/bin/zsh
-
-if [[ $1 = -q ]]; then
-  # execute a command quietly
-  IFS=$'\n' local cmd="$(cat)"
-  if [[ -n $cmd ]]; then
-    # expand and evaluate `cmd`
-    $=cmd
-  else
-    __fzf::widget::clear
+#!/usr/bin/env zsh
+function __fzf::widget::exec {
+  if [[ $1 = -q ]]; then
+    # execute a command quietly
+    IFS=$'\n' local cmd="$(cat)"
+    if [[ -n $cmd ]]; then
+      # expand and evaluate `cmd`
+      $=cmd
+    else
+      __fzf::widget::clear
+    fi
+  elif [[ -n $BUFFER ]]; then
+    zle accept-line
   fi
-elif [[ -n $BUFFER ]]; then
-  zle accept-line
-fi
+}

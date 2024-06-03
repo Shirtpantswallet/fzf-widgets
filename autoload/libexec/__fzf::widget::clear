@@ -1,5 +1,6 @@
-#!/bin/zsh
-
-BUFFER=""
-CURSOR=$#BUFFER
-zle redisplay
+#!/usr/bin/env zsh
+function __fzf::widget::clear {
+  BUFFER=""
+  CURSOR=$#BUFFER
+  zle redisplay
+}
